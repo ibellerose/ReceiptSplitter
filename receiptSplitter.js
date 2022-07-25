@@ -3,9 +3,9 @@ const app = express();
 const fs = require("fs");
 const multer = require('multer');
 const { createWorker } = require('tesseract.js');
-const worker = createWorker({
-    logger: m => console.log(m),
-  });
+// var worker = createWorker({
+//     logger: m => console.log(m),
+//   });
 
 //Storage
 const storage = multer.diskStorage({
@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage}).single('receipt');
 
 app.set('view engine', "ejs");
+app.use(express.static("public"));
 
 // Routes
 app.get('/', (req, res) => {
@@ -30,15 +31,9 @@ app.post('/upload', (req, res) => {
         fs.readFile('./uploads/' + req.file.originalname, (err, data) => {
             if(err) return console.log("This is you error" , err);
 
-            // worker
-            //     .recognize(data, "eng" )
-            //     // .progress(progress => {
-            //     //     console.log(progress);
-            //     // })
-            //     .then(result => {
-            //         res.send(result.text);
-            //     })
-            //     .finally(() => worker.terminate());
+            var worker = createWorker({
+                logger: m => console.log(m),
+              });
 
             (async () => {
                 await worker.load();
@@ -46,6 +41,7 @@ app.post('/upload', (req, res) => {
                 await worker.initialize('eng');
                 const { data: { text } } = await worker.recognize(data);
                 console.log(text);
+                res.send(text);
                 await worker.terminate();
               })();
         });
