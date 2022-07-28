@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html Lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/babel" src="scripts/signup.js"></script>
+        <link rel="stylesheet" href="stylesheets/login.css">
+        <title>Signup</title>
+    </head>
+    <body>
+        
+        <div id="signup"></div>
+        <!-- <script>
+            const form = document.getElementById('outline');
+            form.addEventListener('submit', registerUser);
+
+            async function registerUser(Event) {
+                Event.preventDefault();
+                const username = document.getElementById('username_input').value;
+                const password = document.getElementById('password_input').value;
+                const email = document.getElementById('username_input').value;
+                const firstname = document.getElementById('firstName_input').value;
+                const lastname = document.getElementById('lastName_input').value;
+
+                const result = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'conent-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password,
+                        email,
+                        firstname,
+                        lastname
+                    })
+                }).then((res) => res.json())
+                console.log(result);
+            }
+        </script> -->
+    </body>
+</html>

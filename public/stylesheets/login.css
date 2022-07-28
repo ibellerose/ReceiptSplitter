@@ -1,0 +1,37 @@
+body {
+    background: linear-gradient(0.25turn,rgb(47, 184, 88), rgb(255, 255, 255));
+}
+
+.line {
+    margin: 50px 0px 50px 50px;
+}
+
+#outline {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 25px;
+    background-color: antiquewhite;
+}
+
+label {
+    padding: 20px;
+}
+
+#switch {
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+button {
+    transition-duration: 0.4s;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-left: 25%;
+    width: 50%;
+}
+  
+button:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
