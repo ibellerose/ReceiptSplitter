@@ -5,6 +5,29 @@ class Login extends React.Component{
         super(props);
 
         this.state = {};
+
+        //binding method
+        this.loginUser = this.loginUser.bind(this);
+    }
+
+    
+    async loginUser(){
+
+        const username = document.getElementById('username_input').value;
+        const password = document.getElementById('password_input').value;
+
+        const result = await fetch('/logUserIn', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        }).then((res) => res.json());
+        console.log(result);
+
     }
 
     render(){
@@ -16,9 +39,9 @@ class Login extends React.Component{
                 </div>
                 <div class="line">
                     <label id="password_label">Password</label>
-                    <input type="text" id="password_input"></input>
+                    <input type="password" id="password_input"></input>
                 </div>
-                <button>Login</button>
+                <button onClick={() => this.loginUser()}>Login</button>
                 <div id="switch">Don't have an account? <a href="/signup">Sign Up</a></div>
             </form>
         )

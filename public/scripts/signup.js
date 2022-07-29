@@ -10,12 +10,6 @@ class Signup extends React.Component{
         this.registerUser = this.registerUser.bind(this);
     }
 
-    // registerUser(() => {
-    //     aysnc function sendData() {
-            
-    //     }
-    // });
-
     async registerUser(){
 
         const username = document.getElementById('username_input').value;
