@@ -1,0 +1,24 @@
+h1 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+#newReceiptButtonGrid {
+    display: flex;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 200px 200px;
+}
+
+.receiptStyleButton {
+    margin: 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#friendList{
+    position: relative;
+    height: 450px;
+    background-color: aqua;
+    width: 100%;
+}

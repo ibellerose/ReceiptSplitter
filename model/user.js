@@ -6,6 +6,8 @@ const UserSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true},
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
+    friendList: [String],
+    splitReceiptList: [Object],
 },{
     collection: 'users'
 });

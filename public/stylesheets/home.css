@@ -1,0 +1,38 @@
+body {
+    background-color:rgb(214, 170, 255);
+}
+
+#profile_header {
+    background-color: beige;
+    height: 100px;
+}
+
+#receipt_group {
+
+}
+
+#options_footer {
+    position: fixed;
+    bottom: 0px;
+    height: 100px;
+    background-color: black;
+    width: 100%;
+    text-align: center;
+}
+
+#logout_button{
+    float: right;
+}
+
+#add_buttons {
+    padding: 30px;
+    margin: 15px;
+}
+
+.single_event {
+    background-color: aqua;
+}
+
+.event_action {
+    text-align: right;
+}

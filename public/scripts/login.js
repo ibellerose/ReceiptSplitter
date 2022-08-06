@@ -26,13 +26,20 @@ class Login extends React.Component{
                 password
             })
         }).then((res) => res.json());
-        console.log(result);
+        if(result.status === 'ok'){
+            console.log(result);
+            localStorage.setItem('token', result.data);
+        } else {
+            alert(result.error)
+        }
+
+        window.open("/home","_self");
 
     }
 
     render(){
         return(
-            <form id="outline">
+            <div id="outline">
                 <div class="line">
                     <label id="username_label">Username</label>
                     <input type="text" id="username_input"></input>
@@ -42,8 +49,9 @@ class Login extends React.Component{
                     <input type="password" id="password_input"></input>
                 </div>
                 <button onClick={() => this.loginUser()}>Login</button>
+                {/* <a href="/home">Login</a> */}
                 <div id="switch">Don't have an account? <a href="/signup">Sign Up</a></div>
-            </form>
+            </div>
         )
     }
 }

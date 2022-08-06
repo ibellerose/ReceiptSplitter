@@ -33,11 +33,30 @@ class Signup extends React.Component{
         }).then((res) => res.json());
         console.log(result);
 
+        const result2 = await fetch('/logUserIn', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        }).then((res) => res.json());
+        if(result2.status === 'ok'){
+            console.log(result2);
+            localStorage.setItem('token', result2.data);
+        } else {
+            alert(result2.error)
+        }
+
+        window.open("/home","_self");
+
     }
 
     render(){
         return(
-            <form id="outline">
+            <div id="outline">
                 <div class="line">
                     <label id="firstName_label">First Name</label>
                     <input type="text" id="firstName_input"></input>
@@ -65,7 +84,7 @@ class Signup extends React.Component{
                 <button onClick={() => this.registerUser()} >Register</button>
                 {/* <button type="submit">Register</button> */}
                 <div id="switch">Already have an account? <a href="/login">login</a></div>
-            </form>
+            </div>
 
             
         )
