@@ -55,6 +55,92 @@ app.get('/signup', (req, res) => {
     res.render("signup");
 });
 
+app.get('/itemizedReceipt', (req, res) => {
+    res.render("itemizedReceipt");
+});
+
+app.get('/addFriend', (req, res) => {
+    res.render("addFriend");
+});
+
+app.post('/addToFriendList', async (req, res) => {
+    const {token, name} = req.body;
+
+    try{
+        const user = jwt.verify(token, JWT_SECRET);
+
+        await User.updateOne({username: jwt_decode(token).username},
+            {$push: {friendList: name}});
+
+        return res.json({status: 'ok'});
+
+    }catch(error){
+        throw error;
+    }
+})
+
+app.post('/findFriends', async (req, res) => {
+    const {token, name} = req.body;
+
+    try{
+        const user = jwt.verify(token, JWT_SECRET);
+
+        var currentUser = await User.findOne({username: jwt_decode(token).username}).lean();
+        var cantUseList = [];
+        cantUseList = currentUser.friendList;
+        cantUseList.push(jwt_decode(token).username);
+
+        var potentialMatch = await User.find({
+            $and: [
+                {username: { $regex: '.*' + name + '.*' } },
+                {username: {$nin: cantUseList}}
+            ]
+        }).limit(5);
+
+        const usernameList = [];
+
+        for(let i = 0; i < potentialMatch.length; i++){
+            usernameList.push(potentialMatch[i].username);
+        }
+
+        return res.json({status: 'ok', data: usernameList});
+
+    }catch(error){
+        throw error;
+    }
+});
+
+app.post('/findUsersFriends', async (req, res) => {
+    const {token, name} = req.body;
+
+    try{
+        const user = jwt.verify(token, JWT_SECRET);
+
+        var currentUser = await User.findOne({username: jwt_decode(token).username}).lean();
+        const friendsList = currentUser.friendList;
+
+        return res.json({status: 'ok', data: friendsList});
+
+    }catch(error){
+        throw error;
+    }
+});
+
+app.post('/singleEvent', async (req, res) => {
+    const {token, eventId} = req.body;
+
+    try{
+        const user = jwt.verify(token, JWT_SECRET);
+
+        var eventInfo = await Event.findById(mongoose.Types.ObjectId(eventId)).lean();
+
+        return res.json({status: 'ok', data: eventInfo});
+
+    }catch(error){
+        throw error;
+    }
+});
+
 app.post('/eventInfo', async (req, res) => {
     const {token} = req.body;
 
@@ -69,7 +155,7 @@ app.post('/eventInfo', async (req, res) => {
 
         for(let i = 0; i < userInfo.splitReceiptList.length; i++){
             var eventInfo = await Event.findById(userInfo.splitReceiptList[i].id).lean();
-            eventInfoArray.push({name: eventInfo.name, date: eventInfo.date, action: eventInfo.action});
+            eventInfoArray.push({name: eventInfo.name, date: eventInfo.date, action: eventInfo.action, id: eventInfo._id});
         }
 
         return res.json({status: 'ok', data: eventInfoArray});

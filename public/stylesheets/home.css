@@ -5,9 +5,10 @@ body {
 #profile_header {
     background-color: beige;
     height: 100px;
+    padding: 5px;
 }
 
-#receipt_group {
+#event_group {
 
 }
 
@@ -24,13 +25,21 @@ body {
     float: right;
 }
 
-#add_buttons {
+.add_buttons {
     padding: 30px;
     margin: 15px;
 }
 
 .single_event {
     background-color: aqua;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.single_event:hover {
+    cursor:pointer;
 }
 
 .event_action {

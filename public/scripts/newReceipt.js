@@ -3,6 +3,8 @@ class NewReceipt extends React.Component{
     constructor(props){
         super(props);
 
+        this.state = {usernameDropDownJSX: [], friendsToAdd: []};
+
         //binding method
         this.addEvent = this.addEvent.bind(this);
     }
@@ -20,7 +22,7 @@ class NewReceipt extends React.Component{
             body: JSON.stringify({
                 name,
                 date: Date.now,
-                friends: ["dbellero12345"],
+                friends: this.state.friendsToAdd,
                 itemsList: [{name: "fish", price: 20}, {name: "crab", price: 10}],
                 tip,
                 tax: 20,
@@ -34,6 +36,36 @@ class NewReceipt extends React.Component{
 
         window.open("/home","_self");
 
+    }
+    
+    handleSearch = async (event) => {
+
+        const result = await fetch('/findUsersFriends', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token: localStorage.getItem('token'),
+                name: event.target.value
+            })
+        }).then((res) => res.json());
+
+        console.log(result);
+
+        const optionList = result.data;
+
+        let createDropDownJSX = [];
+
+        for(let i = 0; i < optionList.length; i++){
+            createDropDownJSX.push(
+                <div key={"username" + i} className="dropDownOption">
+                    {optionList[i]}
+                </div>
+            );
+        }
+
+        this.setState({usernameDropDownJSX: createDropDownJSX, friendsToAdd: optionList});
     }
 
     componentDidMount() {
@@ -63,7 +95,10 @@ class NewReceipt extends React.Component{
                 </div>
                 {/* </form> */}
                 <div id="friendList">
-                    
+                    <input onChange={this.handleSearch} id="friend_search" type="text"></input>
+                    <div className="dropDown">
+                        {this.state.usernameDropDownJSX}
+                    </div>
                 </div>
             </div>
         )

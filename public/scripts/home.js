@@ -39,19 +39,13 @@ class Home extends React.Component{
             })
         }).then((res) => res.json());
 
-        // for(let i = 0; i < result.data.length; i++){
-        //     this.setState({events: this.state.events.push(result.data[i])});
-        // }
-
-
-
-
+        console.log(result);
 
         var rows = [];
 
         for(let i = 0; i < result.data.length; i++){
             rows.push(
-                <div key={i} className="single_event">
+                <div onClick={() => this.itemizedReceipt(result.data[i].id)} key={i} className="single_event">
                     <div>{result.data[i].name}</div>
                     <div>{result.data[i].date}</div>
                     <div className="event_action">{result.data[i].action}</div>
@@ -61,8 +55,10 @@ class Home extends React.Component{
 
         this.setState({events : rows});
 
+    }
 
-
+    itemizedReceipt (eventId){
+        window.open("/itemizedReceipt?q=" + eventId,"_self");
     }
 
     async logoutUser (){
@@ -72,6 +68,10 @@ class Home extends React.Component{
 
     newReceiptPage (){
         window.open("/newReceipt","_self");
+    }
+
+    addFriendsPage (){
+        window.open("/addFriend","_self");
     }
 
     componentDidMount() {
@@ -87,12 +87,12 @@ class Home extends React.Component{
                     {this.state.firstname} {this.state.lastname}
                     <button onClick={() => this.logoutUser()} id="logout_button">logout</button>
                 </div>
-                <div id="receipt_group">
+                <div id="event_group">
                     {this.state.events}
                 </div>
                 <nav id="options_footer">
-                    <button onClick={() => this.newReceiptPage()} id="add_buttons">Add New Receipt</button>
-                    <button id="add_buttons">Add Friend</button>
+                    <button onClick={() => this.newReceiptPage()} className="add_buttons">Add New Receipt</button>
+                    <button onClick={() => this.addFriendsPage()} className="add_buttons">Add Friend</button>
                 </nav>
             </div>
         )
